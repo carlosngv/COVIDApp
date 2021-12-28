@@ -32,5 +32,6 @@ La aplicación deberá es capaz de poder analizar y predecir lo siguiente:
 - Factores de muerte por COVID-19 en un país.
 - Comparación entre el número de casos detectados y el número de pruebas de un país.
 - Predicción de casos confirmados por día
-
  </div>
+ 
+ La información que se utilizó de pruebas se encuentra en el siguiente link: [CSSE COVID19 DATA](https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data).
