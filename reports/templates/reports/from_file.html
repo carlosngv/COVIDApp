@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block scripts %}
+
+
+
+{% endblock scripts %}
+
+{% block title %}
+    Subida de archivo
+{% endblock title %}
+
+{% block content %}
+    <h5> Deja caer un archivo </h5>
+    <span> Únicamente archivos con extensión .csv, archivos de Excel o .json </span>
+    <br>
+    <br>
+    <div id="alert-box"></div>
+    <form id="my-dropozne" class="dropzone dz">
+        {% csrf_token %}
+        <div class="fallback">
+            <input name="file" type="file" multiple />
+        </div>
+    </form>
+{% endblock content %}
