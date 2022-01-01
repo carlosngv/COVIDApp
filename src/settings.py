@@ -82,8 +82,12 @@ WSGI_APPLICATION = 'src.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'covid_app',
+        'USER': 'carlosngva',
+        'PASSWORD': '7Dejunio',
+        'HOST': 'database-1.cr7nrc3hirrg.us-east-2.rds.amazonaws.com',
+        'PORT': '5432'
     }
 }
 
@@ -125,11 +129,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
-    BASE_DIR / 'reports' / 'static',
 ]
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = '/images/'
+MEDIA_ROOT = BASE_DIR / 'static/media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

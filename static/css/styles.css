@@ -1,3 +1,13 @@
+table  { margin-top:  20px; display: inline-block; overflow: scroll; }
+th div { margin-top: 0px; position: absolute; }
+
+/* design */
+table { border-collapse: collapse; }
+
+.asteriskField {
+    display: none;
+}
+
 .error-msg {
     color: red;
     margin-top: 1rem;
@@ -17,6 +27,13 @@
 
 .card form {
     padding: 2rem;
+}
 
+.table {
+    overflow: auto !important;
+}
 
+.container{
+    margin-top: 1rem;
+    text-align: center
 }

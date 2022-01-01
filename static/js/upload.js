@@ -15,10 +15,12 @@ const myDropzone = new Dropzone('#my-dropozne', {
     init: function() {
         this.on('sending', function(file, xhr, formData){
             console.log('sending')
+
             formData.append('csrfmiddlewaretoken', csrf)
         })
         this.on('success', function(file, response){
             console.log(response.ex)
+            console.log(file);
             if(response.ex) {
                 handleAlerts('danger', 'El archivo ya existe')
             } else {

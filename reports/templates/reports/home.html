@@ -11,15 +11,38 @@ Inicio
     <form action="" method="POST">
         {% csrf_token %}
         {{ form | crispy }}
-        <button type="submit" class="btn btn-primary"> Analizar </button>
+        <button name="selectBtn" type="submit" class="btn btn-primary"> Seleccionar </button>
     </form>
 </div>
 
-{% if prediction %}
-    <h3> La predición es {{ prediction }} </h3>
-    {{ df | safe }}
+{% if file_content != '' %}
+
+    <div class="container">
+        <div class="row">
+            {% if prediction != ''  %}
+                <div class="col-6">
+                    {{ df | safe }}
+                </div>
+            {% endif %}
+            <div class="col-6">
+                {% if prediction == '#5' %}
+
+                <div class="card animate__animated animate__headShake">
+                    <form action="" method="POST">
+                            <h4> Parámetros </h4>
+                            {% csrf_token %}
+                            {{ case5_form | crispy }}
+                            <button name="predictBtn" type="submit" class="btn btn-primary"> Predecir </button>
+                        </form>
+                    </div>
+
+
+                <img src="data:image/png;base64, {{chart|safe}}" id='img'>
+                {% endif %}
+            </div>
+        </div>
+    </div>
     <br>
-    <img src="data:image/png;base64, {{ chart | safe }}" />
 {% else %}
     <span class="error-msg"> Por favor, ingrese un archivo de carga. </span>
 {% endif %}

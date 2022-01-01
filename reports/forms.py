@@ -33,3 +33,16 @@ class PredictionSelectionForm(forms.Form):
         super(PredictionSelectionForm, self).__init__(*args, **kwargs)
         self.fields['prediction'].label = "Selecciona el enunciado a analizar"
     prediction = forms.ChoiceField(choices=PREDICTION_CHOICES)
+
+class Case5ParametersForm(forms.Form):
+    def __init__(self, parameter_choices, countries, *args, **kwargs):
+        super(Case5ParametersForm, self).__init__(*args, **kwargs)
+        self.fields['deaths'].label = "Muertes"
+        self.fields['deaths'] = forms.ChoiceField(choices=tuple([(param, param) for param in parameter_choices]))
+        self.fields['date'].label = "Fechas"
+        self.fields['date'] = forms.ChoiceField(choices=tuple([(param, param) for param in parameter_choices]))
+        self.fields['country'].label = "País"
+        self.fields['country'] = forms.ChoiceField(choices=tuple([(param, param) for param in countries]))
+    deaths = forms.ChoiceField()
+    country = forms.ChoiceField()
+    date = forms.ChoiceField()
