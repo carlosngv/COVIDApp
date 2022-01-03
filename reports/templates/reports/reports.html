@@ -5,5 +5,12 @@ Reports
 {% endblock title %}
 
 {% block content %}
-{{ msg }}
+{% if problem %}
+    <h2> {{ obj.title | safe }} </h2>
+
+    <span> {{ obj.description }} </span>
+
+    <img src="data:image/png;base64, {{ obj.image_str |safe}}" id='img'>
+
+{% endif %}
 {% endblock content %}

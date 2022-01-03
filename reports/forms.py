@@ -1,6 +1,6 @@
 from django import forms
 
-PREDICTION_CHOICES = (
+PROBLEM_CHOICES = (
     ('#1', 'Tendencia de la infección por Covid-19 en un País.'),
     ('#2', 'Predicción de Infertados en un País.'),
     ('#3', 'Indice de Progresión de la pandemia.'),
@@ -31,18 +31,24 @@ PREDICTION_CHOICES = (
 class PredictionSelectionForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(PredictionSelectionForm, self).__init__(*args, **kwargs)
-        self.fields['prediction'].label = "Selecciona el enunciado a analizar"
-    prediction = forms.ChoiceField(choices=PREDICTION_CHOICES)
+        self.fields['problem'].label = "Selecciona el problema a resolver"
+    problem = forms.ChoiceField(choices=PROBLEM_CHOICES)
 
-class Case5ParametersForm(forms.Form):
-    def __init__(self, parameter_choices, countries, *args, **kwargs):
-        super(Case5ParametersForm, self).__init__(*args, **kwargs)
+class Case6ParametersForm(forms.Form):
+    def __init__(self, parameter_choices, countries,date_choices, *args, **kwargs):
+        super(Case6ParametersForm, self).__init__(*args, **kwargs)
         self.fields['deaths'].label = "Muertes"
         self.fields['deaths'] = forms.ChoiceField(choices=tuple([(param, param) for param in parameter_choices]))
         self.fields['date'].label = "Fechas"
         self.fields['date'] = forms.ChoiceField(choices=tuple([(param, param) for param in parameter_choices]))
         self.fields['country'].label = "País"
         self.fields['country'] = forms.ChoiceField(choices=tuple([(param, param) for param in countries]))
+        self.fields['start_date'].label = "Fecha inicio"
+        self.fields['start_date'] = forms.ChoiceField(choices=tuple([(param, param) for param in date_choices]))
+        self.fields['end_date'].label = "Fecha fin"
+        self.fields['end_date'] = forms.ChoiceField(choices=tuple([(param, param) for param in date_choices]))
     deaths = forms.ChoiceField()
     country = forms.ChoiceField()
     date = forms.ChoiceField()
+    start_date = forms.ChoiceField()
+    end_date = forms.ChoiceField()

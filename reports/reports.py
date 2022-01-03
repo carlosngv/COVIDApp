@@ -1,14 +1,16 @@
+from django.core.files.images import ImageFile
+from django.core.files.base import ContentFile
+from sklearn import metrics
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from .models import Report
+import matplotlib.pyplot as plt
 import datetime
 import base64
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-from django.core.files.images import ImageFile
-from django.core.files.base import ContentFile
 from datetime import date
-from sklearn.linear_model import LinearRegression
 from io import BytesIO
-from .models import Report
 
 
 PREDICTION_CHOICES = (
@@ -58,18 +60,20 @@ def get_graph():
     buffer.close()
     return graph
 
-def save_report():
+def save_report(description):
     report_name = get_report_name(actual_problem)
-    description = 'Se ha concluido que el problema "{}" ha sido realizado exitosamente'.format(report_name)
+
     chart = get_graph()
-    print('CHART = {}'.format(type(chart)))
+
     if Report.objects.filter(name=actual_problem).exists():
         report = Report.objects.get(name=actual_problem)
         report.description = description
         report.image_str = chart
+        report.title=report_name
+        report.save()
         print('MODIFIED report: {}'.format(report))
     else:
-        new_report = Report(name=actual_problem, image_str=chart, description=description)
+        new_report = Report(name=actual_problem, title=report_name, image_str=chart, description=description)
         new_report.save()
         print('NEW report: {}'.format(new_report))
     return chart
@@ -91,7 +95,11 @@ def mortality_prediction_state():
     pass
 
 # 5
-def mortality_prediction_country(df, variables, problem):
+def mortality_prediction_country():
+    pass
+
+# 6
+def death_analysis_country(df, variables, problem):
     # local and global variables
     global actual_problem
     actual_problem = problem
@@ -102,43 +110,62 @@ def mortality_prediction_country(df, variables, problem):
     target = variables[0] # Deaths
     date_features = variables[1] # Dates
     country = variables[2] # Country value
+    start_date = variables[3]
+    end_date = variables[4]
 
     # Preparing graph
     plt.switch_backend('AGG')
     _ = plt.figure(figsize=(7,2))
 
     # Formatting dates
-    for csv_date in df[date_features]:
-        dt = datetime.datetime.strptime(csv_date, "%d/%m/%Y").strftime("%m/%d/%Y")
-        x.append(dt)
+    df[date_features] = pd.to_datetime(df[date_features], dayfirst=True, infer_datetime_format=True)
 
-    x = pd.Series(x)
+    # Processing date boundaries
+    limit_dates = pd.to_datetime(np.asarray([start_date, end_date]), dayfirst=True, infer_datetime_format=True)
+    ordinal_limit_dates = pd.to_datetime(limit_dates).to_series().apply(lambda date: date.toordinal())
+    print('ordinal_limit_dates',ordinal_limit_dates)
 
-    df['date_ordinal'] = pd.to_datetime(x).apply(lambda date: date.toordinal())
+    # Generating ordinal dates and filtering by country
+    df['date_ordinal'] = pd.to_datetime(df[date_features]).apply(lambda date: date.toordinal())
+    df = df.groupby(['date_ordinal', 'Pais'], as_index=False)['Muertes'].sum()
+    df = df.loc[df['Pais'] == country]
 
-    df2 = df.groupby(['date_ordinal', 'country'], as_index=False)[target].sum()
-    df2 = df2.loc[df2['country'] == country]
-    print(df2)
+    # Filtering dates
+    df = df.loc[df['date_ordinal'] >= ordinal_limit_dates[0]]
+    df = df.loc[df['date_ordinal'] <= ordinal_limit_dates[1]]
 
-    X = np.asarray(df2['date_ordinal'])
-    y = np.asarray(df2[target])
+
+    X = np.asarray(df['date_ordinal'])
+    y = np.asarray(df[target])
 
     reg = LinearRegression()
 
     X = X.reshape(-1, 1)
     y = y.reshape(-1, 1)
 
-
-    reg.fit(X, y)
-    prediction_space = np.linspace(min(X), max(X)).reshape(-1, 1)
-
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+    reg.fit(X_train, y_train)
+    prediction_space = np.linspace(min(X_train), max(X_train)).reshape(-1, 1)
     y_predict = reg.predict(prediction_space)
-    #print('y_predict in linespace: {}'.format(y_predict))
-    plt.scatter(X, y, color='black')
-    plt.plot(prediction_space, reg.predict(prediction_space))
-    plt.ylabel('Deaths')
-    plt.xlabel('Days')
 
+    plt.scatter(X, y, color='black')
+    plt.plot(prediction_space, y_predict)
+    plt.ylabel('Muertes')
+    plt.xlabel('Días')
+
+
+    intercept = reg.intercept_ # X
+    coef = reg.coef_[0][0] # Y
+    y_pred = reg.predict(X_test)
+    print('y_pred', y_pred)
+
+    mae = metrics.mean_absolute_error(y_test, y_pred)
+    mse = metrics.mean_squared_error(y_test, y_pred)
+    rmse = np.sqrt(metrics.mean_squared_error(y_test, y_pred))
+
+    print('Mean Absolute Error:', mae)
+    print('Mean Squared Error:', mse)
+    print('Root Mean Squared Error:', rmse)
 
 
     for item in X:
@@ -149,11 +176,25 @@ def mortality_prediction_country(df, variables, problem):
         new_labels.append(item.strftime("%d/%m/%Y"))
 
     new_labels = np.asarray(new_labels)
-    plt.xticks(np.asarray(df2['date_ordinal']), labels=new_labels)
-    return save_report()
-# 6
-def death_number_analysis():
-    pass
+    plt.xticks(np.asarray(df['date_ordinal']), labels=new_labels)
+
+    title = 'Análisis en número de muertes en ' + country +'\n'+'Modelo entrenado: y = ' + str(coef) + 'X +' + str(intercept)
+    plt.title("Regresión linear simple \n" + title, fontsize=10)
+    plt.legend(('Linear Regression','Data'), loc='upper right')
+    plt.locator_params(axis='x', nbins=5) # Reducing x axis bins
+    if coef < 0:
+        description = ''' \
+        El coeficiente de regresión tiene un valor de: {}.  \
+
+        El cuál indica que el numero de muertes ha disminuido conforme pasan los días en {}. \
+        '''.format(coef, country)
+    else:
+        description = ''' \n
+        El coeficiente de regresión tiene un valor de: {}. \n
+
+        El cuál indica que el numero de muertes ha incrementado conforme pasan los días en {}.  \n
+        '''.format(coef, country)
+    return save_report(description)
 
 # 7
 def infection_trend_day_country():

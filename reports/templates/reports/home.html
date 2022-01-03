@@ -19,13 +19,13 @@ Inicio
 
     <div class="container">
         <div class="row">
-            {% if prediction != ''  %}
+            {% if problem != ''  %}
                 <div class="col-6">
                     {{ df | safe }}
                 </div>
             {% endif %}
             <div class="col-6">
-                {% if prediction == '#5' %}
+                {% if problem == '#6' %}
 
                 <div class="card animate__animated animate__headShake">
                     <form action="" method="POST">
@@ -36,8 +36,6 @@ Inicio
                         </form>
                     </div>
 
-
-                <img src="data:image/png;base64, {{chart|safe}}" id='img'>
                 {% endif %}
             </div>
         </div>
