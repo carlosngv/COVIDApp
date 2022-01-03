@@ -6,11 +6,17 @@ Reports
 
 {% block content %}
 {% if problem %}
-    <h2> {{ obj.title | safe }} </h2>
 
-    <span> {{ obj.description }} </span>
+    <div class="card animate__animated animate__slideInDown">
+        <div class="card-header">
+            <h3> {{ obj.title | safe }} </h3>
+        </div>
+        <img class="card-img" src="data:image/png;base64, {{ obj.image_str |safe}}" id='img'>
+        <br />
 
-    <img src="data:image/png;base64, {{ obj.image_str |safe}}" id='img'>
-
+        <div class="card-footer">
+            <span> {{ obj.description }} </span>
+        </div>
+    </div>
 {% endif %}
 {% endblock content %}

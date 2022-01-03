@@ -154,7 +154,7 @@ def death_analysis_country(df, variables, problem):
     plt.xlabel('Días')
 
 
-    intercept = reg.intercept_ # X
+    intercept = reg.intercept_[0] # X
     coef = reg.coef_[0][0] # Y
     y_pred = reg.predict(X_test)
     print('y_pred', y_pred)
@@ -178,9 +178,9 @@ def death_analysis_country(df, variables, problem):
     new_labels = np.asarray(new_labels)
     plt.xticks(np.asarray(df['date_ordinal']), labels=new_labels)
 
-    title = 'Análisis en número de muertes en ' + country +'\n'+'Modelo entrenado: y = ' + str(coef) + 'X +' + str(intercept)
+    title = 'Análisis en número de muertes en ' + country +'\n'+'Modelo entrenado: y = ' + str(coef) + 'X +' + '(' + str(intercept) + ')'
     plt.title("Regresión linear simple \n" + title, fontsize=10)
-    plt.legend(('Linear Regression','Data'), loc='upper right')
+    plt.legend(('Data','Linear Regression'), loc='upper right')
     plt.locator_params(axis='x', nbins=5) # Reducing x axis bins
     if coef < 0:
         description = ''' \
