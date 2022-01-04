@@ -16,6 +16,9 @@ from .forms import (
     Case8ParametersForm,
     Case9ParametersForm,
     Case10ParametersForm,
+    Case15ParametersForm,
+    Case19ParametersForm,
+    Case24ParametersForm,
     Case25ParametersForm,
     )
 
@@ -130,6 +133,21 @@ def home_view(request):
                     countries = df['Pais'].unique()
                     case10_form = Case10ParametersForm(df_columns, countries, request.POST or None, use_required_attribute=False)
                     context['case10_form'] = case10_form
+                elif problem == '#15':
+                    print("Generating problem 15 form...")
+                    countries = df['Pais'].unique()
+                    case15_form = Case15ParametersForm(df_columns, countries, request.POST or None, use_required_attribute=False)
+                    context['case15_form'] = case15_form
+                elif problem == '#19':
+                    print("Generating problem 19 form...")
+                    countries = df['Pais'].unique()
+                    case19_form = Case19ParametersForm(df_columns, countries, request.POST or None, use_required_attribute=False)
+                    context['case19_form'] = case19_form
+                elif problem == '#24':
+                    print("Generating problem 24 form...")
+                    countries = df['Pais'].unique()
+                    case24_form = Case24ParametersForm(df_columns, countries, request.POST or None, use_required_attribute=False)
+                    context['case24_form'] = case24_form
                 elif problem == '#25':
                     print("Generating problem 25 form...")
                     case25_form = Case25ParametersForm(df_columns, request.POST or None, use_required_attribute=False)
@@ -224,6 +242,38 @@ def home_view(request):
                 days_to_predict = request.POST.get('days_to_predict')
                 degree_number = request.POST.get('degree_number')
                 variables = (vaccinated, country1, country2, country_param, days_to_predict, degree_number)
+                resolve_problem(problem, df, variables)
+                problem_solved = True
+            elif problem == '#15':
+                print('case 15')
+                infected = request.POST.get('infected')
+                country_param = request.POST.get('country_param')
+                country = request.POST.get('country')
+                department = request.POST.get('department')
+                department_param = request.POST.get('department_param')
+                days_to_predict = request.POST.get('days_to_predict')
+                degree_number = request.POST.get('degree_number')
+                variables = (infected, country_param, country, department_param, department, days_to_predict, degree_number)
+                resolve_problem(problem, df, variables)
+                problem_solved = True
+            elif problem == '#19':
+                print('case 19')
+                deaths = request.POST.get('deaths')
+                country_param = request.POST.get('country_param')
+                country = request.POST.get('country')
+                degree_number = request.POST.get('degree_number')
+                variables = (deaths, country_param, country, degree_number)
+                resolve_problem(problem, df, variables)
+                problem_solved = True
+            elif problem == '#24':
+                print('case 24')
+                infected = request.POST.get('infected')
+                country_param = request.POST.get('country_param')
+                country = request.POST.get('country')
+                tests_param = request.POST.get('tests_param')
+                days_to_predict = request.POST.get('days_to_predict')
+                degree_number = request.POST.get('degree_number')
+                variables = (infected, country, country_param, tests_param, days_to_predict, degree_number)
                 resolve_problem(problem, df, variables)
                 problem_solved = True
             elif problem == '#25':

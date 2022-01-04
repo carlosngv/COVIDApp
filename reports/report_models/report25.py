@@ -119,7 +119,7 @@ def confirmed_cases_prediction_byday(df, variables, problem):
     plt.xticks(np.asarray(df['date_ordinal']), labels=new_labels)
 
     title = 'Casos confirmados por día' + '\n'+'Modelo entrenado: y = ' + str(coef) + 'X +' + '(' + str(intercept) + ')'
-    plt.title("Regresión linear simple \n" + title, fontsize=6)
+    plt.title("Regresión linear simple \n" + title, fontsize=4)
     plt.legend(('Data','Linear Regression'), loc='upper right')
     plt.locator_params(axis='x', nbins=5) # Reducing x axis bins
     if coef < 0:

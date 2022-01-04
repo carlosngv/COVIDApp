@@ -115,12 +115,42 @@ Inicio
                         </form>
                     </div>
                 {% endif %}
+                {% if problem == '#15' and problem_solved == False %}
+                    <div class="card animate__animated animate__headShake">
+                        <form action="" method="POST">
+                            <h4> Parámetros </h4>
+                            {% csrf_token %}
+                            {{ case15_form | crispy }}
+                            <button name="predictBtn" type="submit" class="btn btn-primary"> Realizar análisis </button>
+                        </form>
+                    </div>
+                {% endif %}
+                {% if problem == '#19' and problem_solved == False %}
+                    <div class="card animate__animated animate__headShake">
+                        <form action="" method="POST">
+                            <h4> Parámetros </h4>
+                            {% csrf_token %}
+                            {{ case19_form | crispy }}
+                            <button name="predictBtn" type="submit" class="btn btn-primary"> Realizar análisis </button>
+                        </form>
+                    </div>
+                {% endif %}
+                {% if problem == '#24' and problem_solved == False %}
+                    <div class="card animate__animated animate__headShake">
+                        <form action="" method="POST">
+                            <h4> Parámetros </h4>
+                            {% csrf_token %}
+                            {{ case24_form | crispy }}
+                            <button name="predictBtn" type="submit" class="btn btn-primary"> Realizar comparación </button>
+                        </form>
+                    </div>
+                {% endif %}
                 {% if problem == '#25' and problem_solved == False %}
                     <div class="card animate__animated animate__headShake">
                         <form action="" method="POST">
                             <h4> Parámetros </h4>
                             {% csrf_token %}
-                            {{ case10_form | crispy }}
+                            {{ case25_form | crispy }}
                             <button name="predictBtn" type="submit" class="btn btn-primary"> Realizar predicción </button>
                         </form>
                     </div>

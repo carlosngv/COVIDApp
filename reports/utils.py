@@ -8,6 +8,10 @@ from .report_models import (
     report8,
     report9,
     report10,
+    report15,
+    report19,
+    report24,
+    report25,
 )
 
 def resolve_problem(problem, df, variables, **kwargs):
@@ -29,3 +33,11 @@ def resolve_problem(problem, df, variables, **kwargs):
         report9.vaccinated_prediction_country(df, variables, problem)
     elif problem == '#10':
         report10.vaccinated_comparison_country(df, variables, problem)
+    elif problem == '#15':
+        report15.activecases_trend_department(df, variables, problem)
+    elif problem == '#19':
+        report19.death_lastday_firstyear(df, variables, problem)
+    elif problem == '#24':
+        report24.cases_tests_comparison_country(df, variables, problem)
+    elif problem == '#25':
+        report25.confirmed_cases_prediction_byday(df, variables, problem)

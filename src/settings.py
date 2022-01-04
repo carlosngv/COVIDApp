@@ -24,9 +24,9 @@ print('BASEDIR {}'.format(BASE_DIR))
 SECRET_KEY = 'django-insecure-rx&j7s9x&ew)s^tkw8hnr(5=5ah-0#&2bzg@bcqa_=!$ypn++o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['covidapp-ocl2.herokuapp.com', '127.0.0.1']
 
 
 # Application definition

@@ -211,6 +211,87 @@ class Case10ParametersForm(forms.Form):
     days_to_predict = forms.CharField()
     degree_number = forms.ChoiceField()
 
+class Case15ParametersForm(forms.Form):
+    def __init__(self, parameter_choices, countries, *args, **kwargs):
+        super(Case15ParametersForm, self).__init__(*args, **kwargs)
+        self.fields['infected'].required = False
+        self.fields['infected'] = forms.ChoiceField(choices=tuple([(param, param) for param in parameter_choices]))
+        self.fields['infected'].label = "Casos activos"
+        self.fields['country_param'].required = False
+        self.fields['country_param'] = forms.ChoiceField(choices=tuple([(param, param) for param in parameter_choices]))
+        self.fields['country_param'].label = "Parametro país"
+        self.fields['country'].required = False
+        self.fields['country'] = forms.ChoiceField(choices=tuple([(param, param) for param in countries]))
+        self.fields['country'].label = "País"
+        self.fields['department_param'].required = False
+        self.fields['department_param'] = forms.ChoiceField(choices=tuple([(param, param) for param in parameter_choices]))
+        self.fields['department_param'].label = "Parametro departamento"
+        self.fields['department'].required = False
+        self.fields['department'] = forms.CharField(max_length=120)
+        self.fields['department'].label = "Departamento"
+        self.fields['days_to_predict'].required = False
+        self.fields['days_to_predict'] = forms.CharField(max_length=10)
+        self.fields['days_to_predict'].label = "Días a predecir"
+        self.fields['degree_number'].required = False
+        self.fields['degree_number'] = forms.ChoiceField(choices=tuple([(param, param) for param in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]))
+        self.fields['degree_number'].label = "Grado polinomial"
+    infected = forms.ChoiceField()
+    country_param = forms.ChoiceField()
+    country = forms.ChoiceField()
+    department_param = forms.ChoiceField()
+    department = forms.CharField()
+    days_to_predict = forms.CharField()
+    degree_number = forms.ChoiceField()
+
+class Case19ParametersForm(forms.Form):
+    def __init__(self, parameter_choices, countries, *args, **kwargs):
+        super(Case19ParametersForm, self).__init__(*args, **kwargs)
+        self.fields['deaths'].required = False
+        self.fields['deaths'] = forms.ChoiceField(choices=tuple([(param, param) for param in parameter_choices]))
+        self.fields['deaths'].label = "Muertes"
+        self.fields['country_param'].required = False
+        self.fields['country_param'] = forms.ChoiceField(choices=tuple([(param, param) for param in parameter_choices]))
+        self.fields['country_param'].label = "Parametro país"
+        self.fields['country'].required = False
+        self.fields['country'] = forms.ChoiceField(choices=tuple([(param, param) for param in countries]))
+        self.fields['country'].label = "País"
+        self.fields['degree_number'].required = False
+        self.fields['degree_number'] = forms.ChoiceField(choices=tuple([(param, param) for param in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]))
+        self.fields['degree_number'].label = "Grado polinomial"
+    deaths = forms.ChoiceField()
+    country_param = forms.ChoiceField()
+    country = forms.ChoiceField()
+    degree_number = forms.ChoiceField()
+
+class Case24ParametersForm(forms.Form):
+    def __init__(self, parameter_choices, countries, *args, **kwargs):
+        super(Case24ParametersForm, self).__init__(*args, **kwargs)
+        self.fields['infected'].required = False
+        self.fields['infected'] = forms.ChoiceField(choices=tuple([(param, param) for param in parameter_choices]))
+        self.fields['infected'].label = "Casos"
+        self.fields['country_param'].required = False
+        self.fields['country_param'] = forms.ChoiceField(choices=tuple([(param, param) for param in parameter_choices]))
+        self.fields['country_param'].label = "Parametro país"
+        self.fields['country'].required = False
+        self.fields['country'] = forms.ChoiceField(choices=tuple([(param, param) for param in countries]))
+        self.fields['country'].label = "País"
+        self.fields['tests_param'].required = False
+        self.fields['tests_param'] = forms.ChoiceField(choices=tuple([(param, param) for param in parameter_choices]))
+        self.fields['tests_param'].label = "Parametro pruebas de COVID19"
+        self.fields['days_to_predict'].required = False
+        self.fields['days_to_predict'] = forms.CharField(max_length=10)
+        self.fields['days_to_predict'].label = "Días a predecir"
+        self.fields['degree_number'].required = False
+        self.fields['degree_number'] = forms.ChoiceField(choices=tuple([(param, param) for param in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]))
+        self.fields['degree_number'].label = "Grado polinomial"
+
+    infected = forms.ChoiceField()
+    country_param = forms.ChoiceField()
+    country = forms.ChoiceField()
+    tests_param = forms.ChoiceField()
+    days_to_predict = forms.CharField()
+    degree_number = forms.ChoiceField()
+
 class Case25ParametersForm(forms.Form):
     def __init__(self, parameter_choices, *args, **kwargs):
         super(Case25ParametersForm, self).__init__(*args, **kwargs)
