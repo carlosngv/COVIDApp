@@ -14,6 +14,10 @@ table { border-collapse: collapse; }
 }
 
 .card {
+    text-align: center;
+
+
+    justify-content: center;
     margin-top: 4rem;
     box-shadow:
     0.2px 1px 5.3px rgba(0, 0, 0, 0.028),
@@ -25,8 +29,13 @@ table { border-collapse: collapse; }
     ;
 }
 
+.card.reports {
+    display: flex !important;
+    align-items: center;
+}
+
 .card form {
-    padding: 2rem;
+    padding: 1rem;
 }
 
 .table {
@@ -36,4 +45,11 @@ table { border-collapse: collapse; }
 .container{
     margin-top: 1rem;
     text-align: center
+}
+
+
+.card img {
+
+    width: 35rem;
+    height: 20rem;
 }

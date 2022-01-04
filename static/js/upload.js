@@ -29,7 +29,7 @@ const myDropzone = new Dropzone('#my-dropozne', {
         })
     },
     maxFiles: 3,
-    maxFilesize: 3,
+    maxFilesize: 50,
     acceptedFiles: '.csv'
 })
 

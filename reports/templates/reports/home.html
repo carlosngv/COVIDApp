@@ -19,23 +19,111 @@ Inicio
 
     <div class="container">
         <div class="row">
-            {% if problem != ''  %}
+            {% if problem != '' and problem_solved == False %}
                 <div class="col-6">
                     {{ df | safe }}
                 </div>
             {% endif %}
             <div class="col-6">
-                {% if problem == '#6' %}
-
-                <div class="card animate__animated animate__headShake">
-                    <form action="" method="POST">
+                {% if problem == '#1' and problem_solved == False %}
+                    <div class="card animate__animated animate__headShake">
+                        <form action="" method="POST">
+                            <h4> Parámetros </h4>
+                            {% csrf_token %}
+                            {{ case1_form | crispy }}
+                            <button name="predictBtn" type="submit" class="btn btn-primary"> Analizar tendencia </button>
+                        </form>
+                    </div>
+                {% endif %}
+                {% if problem == '#2' and problem_solved == False %}
+                    <div class="card animate__animated animate__headShake">
+                        <form action="" method="POST">
+                            <h4> Parámetros </h4>
+                            {% csrf_token %}
+                            {{ case1_form | crispy }}
+                            <button name="predictBtn" type="submit" class="btn btn-primary"> Analizar tendencia </button>
+                        </form>
+                    </div>
+                {% endif %}
+                {% if problem == '#4' and problem_solved == False %}
+                    <div class="card animate__animated animate__headShake">
+                        <form action="" method="POST">
+                            <h4> Parámetros </h4>
+                            {% csrf_token %}
+                            {{ case4_form | crispy }}
+                            <button name="predictBtn" type="submit" class="btn btn-primary"> Predecir </button>
+                        </form>
+                    </div>
+                {% endif %}
+                {% if problem == '#5' and problem_solved == False %}
+                    <div class="card animate__animated animate__headShake">
+                        <form action="" method="POST">
                             <h4> Parámetros </h4>
                             {% csrf_token %}
                             {{ case5_form | crispy }}
                             <button name="predictBtn" type="submit" class="btn btn-primary"> Predecir </button>
                         </form>
                     </div>
-
+                {% endif %}
+                {% if problem == '#6' and problem_solved == False %}
+                    <div class="card animate__animated animate__headShake">
+                        <form action="" method="POST">
+                            <h4> Parámetros </h4>
+                            {% csrf_token %}
+                            {{ case6_form | crispy }}
+                            <button name="predictBtn" type="submit" class="btn btn-primary"> Realizar análisis </button>
+                        </form>
+                    </div>
+                {% endif %}
+                {% if problem == '#7' and problem_solved == False %}
+                    <div class="card animate__animated animate__headShake">
+                        <form action="" method="POST">
+                            <h4> Parámetros </h4>
+                            {% csrf_token %}
+                            {{ case7_form | crispy }}
+                            <button name="predictBtn" type="submit" class="btn btn-primary"> Realizar análisis </button>
+                        </form>
+                    </div>
+                {% endif %}
+                {% if problem == '#8' and problem_solved == False %}
+                    <div class="card animate__animated animate__headShake">
+                        <form action="" method="POST">
+                            <h4> Parámetros </h4>
+                            {% csrf_token %}
+                            {{ case8_form | crispy }}
+                            <button name="predictBtn" type="submit" class="btn btn-primary"> Realizar predicción </button>
+                        </form>
+                    </div>
+                {% endif %}
+                {% if problem == '#9' and problem_solved == False %}
+                    <div class="card animate__animated animate__headShake">
+                        <form action="" method="POST">
+                            <h4> Parámetros </h4>
+                            {% csrf_token %}
+                            {{ case9_form | crispy }}
+                            <button name="predictBtn" type="submit" class="btn btn-primary"> Realizar análisis </button>
+                        </form>
+                    </div>
+                {% endif %}
+                {% if problem == '#10' and problem_solved == False %}
+                    <div class="card animate__animated animate__headShake">
+                        <form action="" method="POST">
+                            <h4> Parámetros </h4>
+                            {% csrf_token %}
+                            {{ case10_form | crispy }}
+                            <button name="predictBtn" type="submit" class="btn btn-primary"> Realizar comparación </button>
+                        </form>
+                    </div>
+                {% endif %}
+                {% if problem == '#25' and problem_solved == False %}
+                    <div class="card animate__animated animate__headShake">
+                        <form action="" method="POST">
+                            <h4> Parámetros </h4>
+                            {% csrf_token %}
+                            {{ case10_form | crispy }}
+                            <button name="predictBtn" type="submit" class="btn btn-primary"> Realizar predicción </button>
+                        </form>
+                    </div>
                 {% endif %}
             </div>
         </div>
